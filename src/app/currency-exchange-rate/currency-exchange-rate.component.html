@@ -1,0 +1,35 @@
+<br>
+
+<div>
+    <div *ngIf="symbols.length>0" class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            SelectCountry
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li *ngFor="let symbol of symbols">
+                <a>{{symbol.name}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Country</th>
+                    <th scope="col">Exchangerate</th>
+                    <th scope="col">Currency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let symbol of symbols">
+                    <td>{{symbol.name}}</td>
+                    <td></td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
