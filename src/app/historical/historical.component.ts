@@ -59,7 +59,11 @@ export class HistoricalComponent implements OnInit {
   loadChart() {
     this.exchangeService.getTimeSeries(this.baseCurrency, this.range.value.start, this.range.value.end, this.toCurrency).subscribe(
       (data: any) => {
-        this.data = data;
+        const result = [];
+        for (let key of Object.keys(data.rates)) {
+          result.push({ date: key, value: data.rates[key][this.toCurrency] ? data.rates[key][this.toCurrency] : data.rates[key]['USD'] })
+        }
+        this.data = result;
       }
     )
   }

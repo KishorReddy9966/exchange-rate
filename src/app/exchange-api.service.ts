@@ -6,7 +6,7 @@ import * as _moment from 'moment';
 import * as moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { TimeSeriesData } from './constants/mock.data';
+import { TimeSeriesData, TimseSeriesResponse } from './constants/mock.data';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class ExchangeApiService {
     }), 
     catchError(err => {
       console.log('Caught in CatchError. Returning mock')
-      return of(TimeSeriesData);
+      return of(TimseSeriesResponse);
     }));
   }
 
