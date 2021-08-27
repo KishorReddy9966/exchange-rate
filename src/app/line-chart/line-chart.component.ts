@@ -20,12 +20,15 @@ export class LineChartComponent implements OnChanges, OnInit {
   public xAxis: any;
   public yAxis: any;
   public lineGroup: any;
+  public div: any;
+
 
   constructor(public chartElem: ElementRef) {
   }
 
   public ngOnInit() {
     if (this.data) {
+
       this.svg = d3
         .select(this.chartElem.nativeElement)
         .select('.linechart')
@@ -35,9 +38,13 @@ export class LineChartComponent implements OnChanges, OnInit {
         .append('g')
         .style('transform', 'translate(' + this.margin + 'px, ' + this.margin + 'px)');
 
+      this.div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
       this.initializeChart();
       this.drawChart();
-      window.addEventListener('resize', () => this.drawChart()); 
+      window.addEventListener('resize', () => this.drawChart());
     }
   }
 
@@ -49,7 +56,7 @@ export class LineChartComponent implements OnChanges, OnInit {
   }
 
   reInitChart() {
-    if(this.svg && this.svgInner) {
+    if (this.svg && this.svgInner) {
       this.initializeChart();
       this.drawChart();
     }
@@ -80,7 +87,29 @@ export class LineChartComponent implements OnChanges, OnInit {
       .attr('id', 'line')
       .style('fill', 'none')
       .style('stroke', 'red')
-      .style('stroke-width', '2px')
+      .style('stroke-width', '2px');
+
+    this.div.selectAll('dot')
+      .data(this.data)
+      .enter()
+      .append('circle')
+      .attr('cx', (d) => this.xScale(d.date))
+      .attr('cy', (d) => this.yScale(d.prediction))
+      .attr('r', 2)
+      .on('mouseover', (event, d) => {
+        this.div.transition()
+          .duration(200)
+          .style('opacity', .9);
+        this.div.html('a tooltip <br/>' + d.date + '<br/>' + d.prediction)
+          .style('left', (event.x) + 'px')
+          .style('top', (event.pageY - 28) + 'px');
+      })
+      .on('mouseout', (d) => {
+        this.div.transition()
+          .duration(500)
+          .style('opacity', 0);
+      });
+
   }
 
   private drawChart(): void {
@@ -113,5 +142,7 @@ export class LineChartComponent implements OnChanges, OnInit {
     ]);
 
     this.lineGroup.attr('d', line(points));
+
+
   }
 }
