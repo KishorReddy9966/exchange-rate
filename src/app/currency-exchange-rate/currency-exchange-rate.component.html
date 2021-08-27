@@ -1,65 +1,62 @@
 <div class="row exchange-rate">
     <div class="col-12">
-        <div *ngIf="symbols.length>0" class="dropdown col-sm-6 col-xs-12">
-            <form class="row">
-                <h4>Exchange Rate Options</h4>
-                <div class="col-6">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Base Currency</mat-label>
-                        <mat-select [(ngModel)]="baseCurrency" (ngModelChange)="loadExchangeRate()" name="baseCurrency">
-                            <mat-option *ngFor="let symbol of symbols" [value]="symbol.symbol">
-                                {{symbol.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-6">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Date for Historical rate</mat-label>
-                        <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="loadExchangeRate()">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-            </form>
-        </div>
+        <form *ngIf="symbols.length>0" class="dropdown row">
+            <h4>Exchange Rate Options</h4>
+            <div class="col-sm-4 col-xs-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Base Currency</mat-label>
+                    <mat-select [(ngModel)]="baseCurrency" (ngModelChange)="loadExchangeRate()" name="baseCurrency">
+                        <mat-option *ngFor="let symbol of symbols" [value]="symbol.symbol">
+                            {{symbol.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Date for Historical rate</mat-label>
+                    <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="loadExchangeRate()">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </form>
     </div>
 
-</div>
+    <div class="col-12">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
 
-<div class="col-12">
-    <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+                    <td mat-cell *matCellDef="let row">
+                        <a (click)="openHistoticalData(row.symbol)"> {{row.symbol}}</a>
+                    </td>
+                </ng-container>
 
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-                <td mat-cell *matCellDef="let row">
-                    <a (click)="openHistoticalData(row.symbol)"> {{row.symbol}}</a>
-                </td>
-            </ng-container>
+                <!-- Currency Column -->
+                <ng-container matColumnDef="currency">
+                    <th mat-header-cell *matHeaderCellDef> Currency </th>
+                    <td mat-cell *matCellDef="let row"> {{symbolsMap[row.symbol]}}</td>
+                </ng-container>
 
-            <!-- Currency Column -->
-            <ng-container matColumnDef="currency">
-                <th mat-header-cell *matHeaderCellDef> Currency </th>
-                <td mat-cell *matCellDef="let row"> {{symbolsMap[row.symbol]}}</td>
-            </ng-container>
+                <!-- Exchange Rate Column -->
+                <ng-container matColumnDef="rate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Exchange Rate </th>
+                    <td mat-cell *matCellDef="let row" matTooltip="{{row.rate}} {{baseCurrency}}"> {{row.rate}} </td>
+                </ng-container>
 
-            <!-- Exchange Rate Column -->
-            <ng-container matColumnDef="rate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Exchange Rate </th>
-                <td mat-cell *matCellDef="let row" matTooltip="{{row.rate}} {{baseCurrency}}"> {{row.rate}} </td>
-            </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    No date to be shown
+                </tr>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                No date to be shown
-            </tr>
-
-            <!-- Row shown when there is no matching data. -->
-            <tr class="mat-row" *matNoDataRow>
-                <!-- <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td> -->
-            </tr> -->
-        </table>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <!-- <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td> -->
+                </tr> -->
+            </table>
+        </div>
     </div>
 </div>
