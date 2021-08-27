@@ -1,29 +1,27 @@
-.dropdown-menu {
-    li a {
-        cursor: pointer;
-    }
-    li:hover{
-        background-color: gray;
-    }
+.exchange-rate {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.table{
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 70%;
-    margin-left: auto;
-  margin-right: auto;
 
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tr:hover {background-color: gray;}
+table {
+  width: 100%;
+
   th {
-    background-color: #04AA6D;
+    background-color: #283f59;
     color: white;
   }
+  td{
+    min-width: 25%;
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: blue;
+    }
+  }
+}
+
+.mat-form-field {
+  font-size: 14px;
+  // width: 100%;
+}
