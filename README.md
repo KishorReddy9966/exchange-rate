@@ -9,6 +9,8 @@ This project uses APIs from [ExchangeRates API](https://exchangeratesapi.io/docu
 Download the code
 `git clone https://github.com/KishorReddy9966/exchange-rate.git`
 
+install latest NodeJs and angular cli.
+
 `cd exchange-rate`
 
 Update the service access_key if needed in environmrnt.ts & environment-prod.ts
